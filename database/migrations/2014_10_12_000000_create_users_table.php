@@ -15,12 +15,19 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->string('firstName');
+            $table->string('lastName');
+            $table->string('image')->nullable();
+            $table->string('mobile')->unique();
+            $table->date('date');
+            $table->enum('gender' , ['male' , 'female']);
+            $table->enum('status' , ['active' , 'inactive'])->default('inactive');
+            $table->foreignId('city_id');
+            $table->foreign('city_id')->on('cities')->references('id')->cascadeOnDelete();
+            $table->morphs('actor');
+            // $table->rememberToken();
             $table->timestamps();
+            // $table->timestamp('email_verified_at')->nullable();
         });
     }
 

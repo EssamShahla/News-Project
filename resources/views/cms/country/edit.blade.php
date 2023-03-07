@@ -36,7 +36,7 @@
               <!-- /.card-body -->
 
               <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="button" onclick="performUpdate({{$countries->id}})" class="btn btn-primary">Update</button>
                 <a href="{{route('countries.index')}}" type="submit" class="btn btn-success">Go Back</a>
               </div>
             </form>
@@ -49,6 +49,14 @@
   <!-- /.content -->
 @endsection
 
-@section('title')
+@section('script')
+<script>
+    function performUpdate(id){
+        let formData = new FormData();
+        formData.append('name' , document.getElementById('name').value);
+        formData.append('code' , document.getElementById('code').value);
+        storeRoute('/cms/admin/countries_update/' + id , formData);
+    }
 
+</script>
 @endsection

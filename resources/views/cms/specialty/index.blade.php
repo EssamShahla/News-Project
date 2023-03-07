@@ -1,8 +1,8 @@
 @extends('cms.parent')
 
-@section('title' , 'Country')
-@section('main-title' , 'Index country')
-@section('sub-title' , 'Index country')
+@section('title' , 'Specialty')
+@section('main-title' , 'Index Specialty')
+@section('sub-title' , 'Index Specialty')
 
 @section('style')
 
@@ -17,7 +17,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-                <a href="{{route('countries.create') }}" type="button" class="btn btn-info">Create new country</a>
+                <a href="{{route('specialties.create')}}" type="button" class="btn btn-info">Create new Specialty</a>
 
               <div class="card-tools">
                 <div class="input-group input-group-sm" style="width: 150px;">
@@ -37,30 +37,26 @@
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Country Name</th>
-                    <th>Country Code</th>
-                    <th>Cities number</th>
+                    <th>Specialty Name</th>
                     <th>Settings</th>
                   </tr>
                 </thead>
                 <tbody>
-                    @foreach ($countries as $country)
+                    @foreach ($specialties as $Specialty)
                     <tr>
-                        <td>{{$country->id}}</td>
-                        <td>{{$country->name}}</td>
-                        <td>{{$country->code}}</td>
-                        <td>{{$country->city_count}}</td>
+                        <td>{{$Specialty->id}}</td>
+                        <td>{{$Specialty->name}}</td>
                         {{-- <td><span class="tag tag-success">Approved</span></td> --}}
                         <td><div class="btn-group">
-                            <a href="{{route('countries.edit' , $country->id) }}" type="button" class="btn btn-info">Edit</a>
-                            <button type="button" onclick="performDestroy({{$country->id}} , this)" class="btn btn-danger">Delete</button>
-                            <a href="{{route('countries.show' , $country->id) }}" type="button" class="btn btn-success">Show</a>
+                            <a href="{{route('specialties.edit' , $Specialty->id) }}" type="button" class="btn btn-info">Edit</a>
+                            <button type="button" onclick="performDestroy({{$Specialty->id}} , this)" class="btn btn-danger">Delete</button>
+                            <a href="{{route('specialties.show' , $Specialty->id) }}" type="button" class="btn btn-success">Show</a>
                           </div></td>
                       </tr>
                     @endforeach
                 </tbody>
               </table>
-              {{ $countries->links() }}
+              {{ $specialties->links() }}
             </div>
             <!-- /.card-body -->
           </div>
@@ -75,7 +71,7 @@
 @section('script')
   <script>
         function performDestroy(id , reference){
-            confirmDestroy('/cms/admin/countries/' + id , reference);
+            confirmDestroy('/cms/admin/specialties/' + id , reference);
         }
     </script>
 @endsection

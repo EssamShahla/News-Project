@@ -1,8 +1,8 @@
 @extends('cms.parent')
 
-@section('title' , 'Country')
-@section('main-title' , 'Index country')
-@section('sub-title' , 'Index country')
+@section('title' , 'Admin')
+@section('main-title' , 'Index Admin')
+@section('sub-title' , 'Index Admin')
 
 @section('style')
 
@@ -17,7 +17,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-                <a href="{{route('countries.create') }}" type="button" class="btn btn-info">Create new country</a>
+                <a href="{{route('admins.create') }}" type="button" class="btn btn-info">Create new Admin</a>
 
               <div class="card-tools">
                 <div class="input-group input-group-sm" style="width: 150px;">
@@ -37,30 +37,39 @@
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Country Name</th>
-                    <th>Country Code</th>
-                    <th>Cities number</th>
+                    <th>profile photo</th>
+                    <th>Admin Full Name</th>
+                    <th>Admin email</th>
+                    <th>Admin Mobile</th>
+                    <th>Admin gender</th>
+                    <th>Status</th>
+                    <th>Admin location</th>
                     <th>Settings</th>
                   </tr>
                 </thead>
                 <tbody>
-                    @foreach ($countries as $country)
+                    @foreach ($admins as $Admin)
                     <tr>
-                        <td>{{$country->id}}</td>
-                        <td>{{$country->name}}</td>
-                        <td>{{$country->code}}</td>
-                        <td>{{$country->city_count}}</td>
+                        <td>{{$Admin->id}}</td>
+                        <td class="image">
+                            <img class="img-circle img-bordered-sm elevation-2" src="{{asset('storage/images/admin/' . $Admin->user->image)}}" width="60" height="60" alt="Admin Image">
+                        </td>
+                        <td>{{$Admin->user->firstName . " " . $Admin->user->lastName ?? ""}}</td>
+                        <td>{{$Admin->email ?? ""}}</td>
+                        <td>{{$Admin->user->mobile ?? ""}}</td>
+                        <td>{{$Admin->user->gender ?? ""}}</td>
+                        <td>{{$Admin->user->status ?? ""}}</td>
+                        <td>{{$Admin->user->City->name ?? ""}}</td>
                         {{-- <td><span class="tag tag-success">Approved</span></td> --}}
                         <td><div class="btn-group">
-                            <a href="{{route('countries.edit' , $country->id) }}" type="button" class="btn btn-info">Edit</a>
-                            <button type="button" onclick="performDestroy({{$country->id}} , this)" class="btn btn-danger">Delete</button>
-                            <a href="{{route('countries.show' , $country->id) }}" type="button" class="btn btn-success">Show</a>
+                            <a href="{{route('admins.edit' , $Admin->id) }}" type="button" class="btn btn-info">Edit</a>
+                            <button type="button" onclick="performDestroy({{$Admin->id}} , this)" class="btn btn-danger">Delete</button>
                           </div></td>
                       </tr>
                     @endforeach
                 </tbody>
               </table>
-              {{ $countries->links() }}
+              {{ $admins->links() }}
             </div>
             <!-- /.card-body -->
           </div>
@@ -75,7 +84,7 @@
 @section('script')
   <script>
         function performDestroy(id , reference){
-            confirmDestroy('/cms/admin/countries/' + id , reference);
+            confirmDestroy('/cms/admin/admins/' + id , reference);
         }
     </script>
 @endsection

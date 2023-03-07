@@ -239,13 +239,36 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/mailbox/mailbox.html" class="nav-link">
+                <a href="{{route('admins.index')}}" class="nav-link">
                     <i class="fas fa-list-ul nav-icon"></i>
                   <p>Index</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/mailbox/compose.html" class="nav-link">
+                <a href="{{route('admins.create')}}" class="nav-link">
+                    <i class="fas fa-plus-circle nav-icon"></i>
+                  <p>Create</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon far fa-user"></i>
+              <p>
+                Author
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('authors.index')}}" class="nav-link">
+                    <i class="fas fa-list-ul nav-icon"></i>
+                  <p>Index</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('authors.create')}}" class="nav-link">
                     <i class="fas fa-plus-circle nav-icon"></i>
                   <p>Create</p>
                 </a>
@@ -272,6 +295,75 @@
               <li class="nav-item">
                 <a href="{{route('countries.create')}}" class="nav-link">
                   <i class="fas fa-plus-circle nav-icon"></i>
+                  <p>Create</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-building"></i>
+              <p>
+                City
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('cities.index')}}" class="nav-link">
+                  <i class="fas fa-list-ul nav-icon"></i>
+                  <p>Index</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('cities.create')}}" class="nav-link">
+                  <i class="fas fa-plus-circle nav-icon"></i>
+                  <p>Create</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-building"></i>
+              <p>
+                Specialty
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('specialties.index')}}" class="nav-link">
+                  <i class="fas fa-list-ul nav-icon"></i>
+                  <p>Index</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('specialties.create')}}" class="nav-link">
+                  <i class="fas fa-plus-circle nav-icon"></i>
+                  <p>Create</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon far fa-user"></i>
+              <p>
+                Product
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('products.index')}}" class="nav-link">
+                    <i class="fas fa-list-ul nav-icon"></i>
+                  <p>Index</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('products.create')}}" class="nav-link">
+                    <i class="fas fa-plus-circle nav-icon"></i>
                   <p>Create</p>
                 </a>
               </li>
@@ -376,10 +468,11 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('cms/dist/js/demo.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="d{{ asset('cms/ist/js/pages/dashboard.js')}}"></script>
+<script src="{{ asset('cms/dist/js/pages/dashboard.js')}}"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('cms/dist/js/crud.js') }}"></script>
 @yield('script')
 </body>
 </html>

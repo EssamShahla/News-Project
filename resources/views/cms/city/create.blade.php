@@ -1,7 +1,7 @@
 @extends('cms.parent')
 
 @section('title' , 'Create')
-@section('main-title' , 'Create country')
+@section('main-title' , 'Create city')
 @section('sub-title' , 'Create')
 
 @section('style')
@@ -18,20 +18,28 @@
           <!-- general form elements -->
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">Add country</h3>
+              <h3 class="card-title">Add city</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
             <form>
               <div class="card-body">
                 <div class="form-group">
-                  <label for="name">Country Name</label>
-                  <input type="text" class="form-control" id="name" name="name" placeholder="Enter country name">
+                    <label>country name</label>
+                    <select class="form-control select2 select2-danger" id="country_id" name="country_id" data-dropdown-css-class="select2-danger" style="width: 100%;">
+                        @foreach ($countries as $country)
+                        <option value="{{$country->id}}">{{$country->name}}</option>
+                        @endforeach
+                    </select>
+                  </div>
+                <div class="form-group">
+                  <label for="name">city name</label>
+                  <input type="text" class="form-control" id="name" name="name" placeholder="Enter city name">
                 </div>
                 <div class="form-group">
-                  <label for="code">Country Code</label>
-                  <input type="text" class="form-control" id="code" name="code" placeholder="Enter country code">
-                </div>
+                    <label for="street">street name</label>
+                    <input type="text" class="form-control" id="street" name="street" placeholder="Enter street name">
+                  </div>
               </div>
               <!-- /.card-body -->
 
@@ -52,10 +60,10 @@
     <script>
         function performStore(){
             let formData = new FormData();
+            formData.append('country_id' , document.getElementById('country_id').value);
             formData.append('name' , document.getElementById('name').value);
-            formData.append('code' , document.getElementById('code').value);
-
-            store('/cms/admin/countries' , formData);
+            formData.append('street' , document.getElementById('street').value);
+            store('/cms/admin/cities' , formData);
         }
     </script>
 @endsection
