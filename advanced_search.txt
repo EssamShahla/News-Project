@@ -1,0 +1,13 @@
+$countries = YourModel::WithCount('if you have any relation')->orderBy('id','desc')->paginate(number);
+
+        if ($request->get('اسم الحقل الذي تريد البحث عن طريقه')){
+            $var = $request->input("اسم الحقل الذي تريد البحث عن طريقه");
+            $var = yourModel::where(function ($query) use ($var) {
+                $query->where('col1', 'LIKE', "%$var%")
+                      ->orWhere('col2', 'LIKE', "%$var%")
+                      ->orWhere('col3', 'LIKE', "%$var%");
+                // Add more orWhere clauses as needed for additional columns
+            })->paginate(number)او ممكن تستخدم get();
+        }
+	
+	return response()->view('your view' , compact('var'));
