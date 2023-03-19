@@ -17,9 +17,8 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        $authors = Author::With('user')->orderBy('id' , 'desc')->paginate('21');
-        $cities = City::all();
-        return response()->view('cms.author.index' , compact('authors' , 'cities'));
+        $authors = Author::withCount('articles')->orderBy('id' , 'desc')->paginate(21);
+        return response()->view('cms.author.index' , compact('authors'));
     }
 
     /**
@@ -44,14 +43,15 @@ class AuthorController extends Controller
         $validator = validator($request->all() , [
             'firstName' => 'required|string|min:4|max:20' ,
             'lastName' => 'required|string|min:4|max:20' ,
-            'email' => 'required|unique:authors' ,
+            'email' => 'required|unique:authors,email' ,
             'password' => 'required' ,
-            'mobile' => 'required|digits:10' ,
+            'date' => 'required' ,
+            'mobile' => 'required' ,
             'gender' => 'required' ,
             'status' => 'required' ,
             'city_id' => 'required' ,
-            'image' => 'nullable' ,
-        ]);
+            'image' => 'required' ,
+            ]);
         if(! $validator->fails()){
             $authors = new Author();
             $authors->email = $request->get('email');
@@ -61,21 +61,23 @@ class AuthorController extends Controller
 
             if($isSaved){
                 $users = new User();
+                if (request()->hasFile('image')) {
+
+                    $image = $request->file('image');
+
+                    $imageName = time() . 'image.' . $image->getClientOriginalExtension();
+
+                    $image->move('storage/images/author', $imageName);
+
+                    $users->image = $imageName;
+                    }
                 $users->firstName = $request->get('firstName') ;
                 $users->lastName = $request->get('lastName');
-                $users->mobile = $request->get('mobile');
                 $users->date = $request->get('date');
                 $users->gender = $request->get('gender');
+                $users->mobile = $request->get('mobile');
                 $users->status = $request->get('status');
                 $users->city_id = $request->get('city_id');
-
-                if(request()->hasFile('image')){
-                    $image = $request->file('image');
-                    $imageName = time() . 'image.' . $image->getClientOriginalExtension();
-                    $image->move('storage/images/author' , $imageName);
-                    $users->image = $imageName;
-                }
-
                 $users->actor()->associate($authors);
                 $users->save();
             }
@@ -112,7 +114,7 @@ class AuthorController extends Controller
     {
         $authors = Author::findOrFail($id);
         $cities = City::all();
-        return response()->view('cms.author.edit' , compact('authors' , 'cities'));
+        return response()->view('cms.author.edit' , compact('authors' ,'cities'));
     }
 
     /**
@@ -125,22 +127,14 @@ class AuthorController extends Controller
     public function update(Request $request, $id)
     {
         $validator = validator($request->all() , [
-            'firstName' => 'required|string|min:4|max:20' ,
-            'lastName' => 'required|string|min:4|max:20' ,
-            // 'email' => 'required|unique:admins' ,
-            // 'password' => 'required' ,
-            'mobile' => 'required|digits:10' ,
-            'gender' => 'required' ,
-            'status' => 'required' ,
-            'city_id' => 'required' ,
             'image' => 'nullable' ,
         ]);
         if(! $validator->fails()){
             $authors = Author::findOrFail($id);
-            $isSaved = $authors->save();
+            $isUpdate = $authors->save();
 
-            if($isSaved){
-                $users = User::findOrFail($id);
+            if($isUpdate){
+                $users = $authors->user;
                 $users->firstName = $request->get('firstName') ;
                 $users->lastName = $request->get('lastName');
                 $users->mobile = $request->get('mobile');
@@ -150,13 +144,6 @@ class AuthorController extends Controller
                 $users->city_id = $request->get('city_id');
 
                 if(request()->hasFile('image')){
-
-                    // $path = public_path().'storage/images/admin';
-                    // //code for remove old file
-
-                    // $file_old = $path.$users->file;
-                    // unlink($file_old);
-
                     $image = $request->file('image');
                     $imageName = time() . 'image.' . $image->getClientOriginalExtension();
                     $image->move('storage/images/author' , $imageName);
@@ -165,8 +152,9 @@ class AuthorController extends Controller
 
                 $users->actor()->associate($authors);
                 $users->save();
-                return ['redirect'=>route('authors.index')];
-        } }  else{
+                return ['redirect' =>route('authors.index')];
+            }
+         }  else{
                 return response()->json([
                     'icon' => 'error' ,
                     'title' => $validator->getMessageBag()->first() ,

@@ -12,9 +12,28 @@ class CountryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $countries = Country::WithCount('city')->orderBy('id','desc')->paginate(21);
+
+        if ($request->get('name')){
+            $countries = $request->input('name');
+            $countries = Country::where(function ($query) use ($countries) {
+                $query->where('name', 'LIKE', "%$countries%")
+                      ->orWhere('code', 'LIKE', "%$countries%")
+                      ->orWhere('id', 'LIKE', "%$countries%");
+                // Add more orWhere clauses as needed for additional columns
+            })->paginate(21);
+        }
+
+        // if ($request->get('name')) {
+        //     $countries = Country::where('name', 'like', '%' . $request->name . '%')->WithCount('city');
+        // }
+        // if ($request->get('code')) {
+        //     $countries = Country::where('code', 'like', '%' . $request->code . '%')->WithCount('city');
+        // }
+        // $countries = $countries->;
+
         return response()->view('cms.country.index' , compact('countries'));
     }
 

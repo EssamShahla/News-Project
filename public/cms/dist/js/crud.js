@@ -122,7 +122,7 @@ function updatePage(url, data) {
         });
 }
 
-function confirmDestroy(url, td) {
+function confirmDestroy(url) {
     Swal.fire({
         title: 'هل أنت متأكد من عملية الحذف ؟',
         text: "لا يمكن التراجع عن عملية الحذف",
@@ -134,7 +134,7 @@ function confirmDestroy(url, td) {
         cancelButtonText: 'لا',
     }).then((result) => {
         if (result.isConfirmed) {
-            destroy(url, td);
+            destroy(url);
             Swal.fire({
                 position: 'center',
                 icon: 'success',
@@ -157,12 +157,15 @@ function confirmDestroy(url, td) {
 }
 
 
-function destroy(url, td) {
+function destroy(url) {
     axios.delete(url)
         .then(function (response) {
             // handle success
             console.log(response.data);
-            td.closest('tr').remove();
+            document.querySelectorAll('tbody tr').forEach(function(row) {
+                row.remove(); // remove all table rows
+            });
+            // td.closest('tr').remove();
             // showToaster(response.data.message, true);
         })
         .catch(function (error) {

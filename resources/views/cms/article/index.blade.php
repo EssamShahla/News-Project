@@ -1,8 +1,15 @@
 @extends('cms.parent')
 
-@section('title' , 'Admin')
-@section('main-title' , 'Index Admin')
-@section('sub-title' , 'Index Admin')
+@section('title' , 'article')
+
+@section('main-title')
+<div class="AuthorName">
+        {{$authors->user->firstName . " " . $authors->user->lastName}} Articles page
+</div>
+@endsection
+
+
+@section('sub-title' , 'Index article')
 
 @section('style')
 
@@ -17,7 +24,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-                <a href="{{route('admins.create') }}" type="button" class="btn btn-info">Create new Admin</a>
+                <a href="{{route('createArticle' , $id) }}" type="button" class="btn btn-info">Create new article</a>
 
               <div class="card-tools">
                 <div class="input-group input-group-sm" style="width: 150px;">
@@ -37,39 +44,33 @@
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>profile photo</th>
-                    <th>Full Name</th>
-                    <th>email</th>
-                    <th>Mobile</th>
-                    <th>gender</th>
-                    <th>Status</th>
-                    <th>location</th>
+                    <th>article image</th>
+                    <th>title</th>
+                    <th>short description</th>
+                    <th>category</th>
                     <th>Settings</th>
                   </tr>
                 </thead>
                 <tbody>
-                    @foreach ($admins as $Admin)
+                    @foreach ($articles as $article)
                     <tr>
-                        <td>{{$Admin->id}}</td>
+                        <td>{{$article->id}}</td>
                         <td class="image">
-                            <img class="img-circle img-bordered-sm elevation-2" src="{{asset('storage/images/admin/' . $Admin->user->image)}}" width="60" height="60" alt="Admin Image">
+                            <img class="img-circle img-bordered-sm elevation-2" src="{{asset('storage/images/article/' . $article->image)}}" width="60" height="60" alt="article Image">
                         </td>
-                        <td>{{$Admin->user->firstName . " " . $Admin->user->lastName ?? ""}}</td>
-                        <td>{{$Admin->email ?? ""}}</td>
-                        <td>{{$Admin->user->mobile ?? ""}}</td>
-                        <td>{{$Admin->user->gender ?? ""}}</td>
-                        <td>{{$Admin->user->status ?? ""}}</td>
-                        <td>{{$Admin->user->City->name ?? ""}}</td>
+                        <td>{{$article->title}}</td>
+                        <td>{{$article->short_description}}</td>
+                        <td>{{$article->category->name}}</td>
                         {{-- <td><span class="tag tag-success">Approved</span></td> --}}
                         <td><div class="btn-group">
-                            <a href="{{route('admins.edit' , $Admin->id) }}" type="button" class="btn btn-info">Edit</a>
-                            <button type="button" onclick="performDestroy({{$Admin->id}} , this)" class="btn btn-danger">Delete</button>
+                            <a href="{{route('articles.edit' , $article->id) }}" type="button" class="btn btn-info">Edit</a>
+                            <button type="button" onclick="performDestroy({{$article->id}} , this)" class="btn btn-danger">Delete</button>
                           </div></td>
                       </tr>
                     @endforeach
                 </tbody>
               </table>
-              {{ $admins->links() }}
+              {{ $articles->links() }}
             </div>
             <!-- /.card-body -->
           </div>
@@ -84,7 +85,7 @@
 @section('script')
   <script>
         function performDestroy(id , reference){
-            confirmDestroy('/cms/admin/admins/' + id , reference);
+            confirmDestroy('/cms/admin/articles/' + id , reference);
         }
     </script>
 @endsection

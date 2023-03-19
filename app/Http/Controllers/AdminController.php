@@ -42,16 +42,17 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         $validator = validator($request->all() , [
-            'firstName' => 'required|string|min:4|max:20' ,
-            'lastName' => 'required|string|min:4|max:20' ,
+            'firstName' => 'required' ,
+            'lastName' => 'required' ,
             'email' => 'required|unique:admins' ,
             'password' => 'required' ,
-            'mobile' => 'required|digits:10' ,
+            'date' => 'required' ,
+            'mobile' => 'required' ,
             'gender' => 'required' ,
             'status' => 'required' ,
             'city_id' => 'required' ,
             'image' => 'nullable' ,
-        ]);
+            ]);
         if(! $validator->fails()){
             $admins = new Admin();
             $admins->email = $request->get('email');
@@ -61,14 +62,12 @@ class AdminController extends Controller
 
             if($isSaved){
                 $users = new User();
-
-                $users->firstName = $request->get('firstName') ;
+                $users->firstName = $request->get('firstName');
                 $users->lastName = $request->get('lastName');
-                $users->mobile = $request->get('mobile');
                 $users->date = $request->get('date');
                 $users->gender = $request->get('gender');
+                $users->mobile = $request->get('mobile');
                 $users->status = $request->get('status');
-                $users->city_id = $request->get('city_id');
 
                 if(request()->hasFile('image')){
                     $image = $request->file('image');
@@ -76,6 +75,7 @@ class AdminController extends Controller
                     $image->move('storage/images/admin' , $imageName);
                     $users->image = $imageName;
                 }
+                $users->city_id = $request->get('city_id');
 
                 $users->actor()->associate($admins);
                 $users->save();
@@ -130,7 +130,7 @@ class AdminController extends Controller
             'lastName' => 'required|string|min:4|max:20' ,
             // 'email' => 'required|unique:admins' ,
             // 'password' => 'required' ,
-            'mobile' => 'required|digits:10' ,
+            'mobile' => 'required' ,
             'gender' => 'required' ,
             'status' => 'required' ,
             'city_id' => 'required' ,
@@ -151,23 +151,16 @@ class AdminController extends Controller
                 $users->city_id = $request->get('city_id');
 
                 if(request()->hasFile('image')){
-
-                    // $path = public_path().'storage/images/admin';
-                    // //code for remove old file
-
-                    // $file_old = $path.$users->file;
-                    // unlink($file_old);
-
                     $image = $request->file('image');
                     $imageName = time() . 'image.' . $image->getClientOriginalExtension();
                     $image->move('storage/images/admin' , $imageName);
                     $users->image = $imageName;
                 }
-
                 $users->actor()->associate($admins);
-                $users->save();
+                $isUpdate = $users->save();
                 return ['redirect'=>route('admins.index')];
-        } }  else{
+            }
+         }  else{
                 return response()->json([
                     'icon' => 'error' ,
                     'title' => $validator->getMessageBag()->first() ,

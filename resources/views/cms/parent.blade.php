@@ -221,7 +221,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./index.html" class="nav-link active">
+                <a href="{{route('home')}}" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Home</p>
                 </a>
@@ -302,7 +302,7 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-building"></i>
+              <i class="nav-icon fas fa-street-view"></i>
               <p>
                 City
                 <i class="fas fa-angle-left right"></i>
@@ -325,7 +325,7 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-building"></i>
+              <i class="nav-icon fas fa-brain"></i>
               <p>
                 Specialty
                 <i class="fas fa-angle-left right"></i>
@@ -348,23 +348,40 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon far fa-user"></i>
+              <i class="nav-icon fas fa-folder-open"></i>
               <p>
-                Product
+                Category
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{route('products.index')}}" class="nav-link">
-                    <i class="fas fa-list-ul nav-icon"></i>
+                <a href="{{route('categories.index')}}" class="nav-link">
+                  <i class="fas fa-list-ul nav-icon"></i>
                   <p>Index</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('products.create')}}" class="nav-link">
-                    <i class="fas fa-plus-circle nav-icon"></i>
+                <a href="{{route('categories.create')}}" class="nav-link">
+                  <i class="fas fa-plus-circle nav-icon"></i>
                   <p>Create</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-newspaper"></i>
+              <p>
+                Article
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('articles.index')}}" class="nav-link">
+                  <i class="fas fa-list-ul nav-icon"></i>
+                  <p>IndexAll</p>
                 </a>
               </li>
             </ul>
@@ -383,7 +400,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{route('logout')}}" class="nav-link">
               <i class="fas fa-sign-out-alt nav-icon"></i>
               <p>Logout</p>
             </a>

@@ -12,4 +12,11 @@ class Country extends Model
     public function city(){
         return $this->hasMany(City::class);
     }
+    protected static function boot(){
+        parent::boot();
+
+        static::deleting(function ($country) {
+            $country->city()->delete();
+        });
+    }
 }

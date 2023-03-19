@@ -60,7 +60,7 @@
             <div class="row">
                 <div class="col-md-6 form-group">
                     <label for="mobile">your mobile</label>
-                    <input type="number" class="form-control" id="mobile" name="mobile" placeholder="Enter your mobile">
+                    <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Enter your mobile">
                   </div>
                   <div class="col-md-6 form-group">
                     <label for="status">Status</label>

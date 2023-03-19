@@ -18,12 +18,14 @@ class CreateUsersTable extends Migration
             $table->string('firstName');
             $table->string('lastName');
             $table->string('image')->nullable();
-            $table->string('mobile')->unique();
+            $table->string('mobile');
             $table->date('date');
             $table->enum('gender' , ['male' , 'female']);
             $table->enum('status' , ['active' , 'inactive'])->default('inactive');
             $table->foreignId('city_id');
             $table->foreign('city_id')->on('cities')->references('id')->cascadeOnDelete();
+            // $table->foreignId('specialty_id');
+            // $table->foreign('specialty_id')->on('specialties')->references('id')->cascadeOnDelete();
             $table->morphs('actor');
             // $table->rememberToken();
             $table->timestamps();
